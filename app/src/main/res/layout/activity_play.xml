@@ -3,18 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background" />
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -47,11 +37,23 @@
         android:id="@+id/btnActor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="44dp"
         android:text="Actor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.303"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="44dp"
+        android:text="Start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnActor"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -60,11 +62,11 @@
         android:layout_height="62dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bangdiem" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvTienCuoc"
         android:layout_width="57dp"
         android:layout_height="35dp"
         android:gravity="center"
@@ -112,8 +114,8 @@
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="539dp"
-        android:layout_height="52dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:thumb="@drawable/actor1"
         app:layout_constraintBottom_toBottomOf="@+id/checkBox"
         app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
@@ -122,8 +124,8 @@
 
     <SeekBar
         android:id="@+id/seekBar2"
-        android:layout_width="539dp"
-        android:layout_height="52dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:thumb="@drawable/actor2"
         app:layout_constraintBottom_toBottomOf="@+id/checkBox2"
         app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
@@ -132,8 +134,8 @@
 
     <SeekBar
         android:id="@+id/seekBar3"
-        android:layout_width="539dp"
-        android:layout_height="52dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:thumb="@drawable/actor3"
         app:layout_constraintBottom_toBottomOf="@+id/checkBox3"
         app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
