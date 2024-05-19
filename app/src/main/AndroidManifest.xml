@@ -13,8 +13,18 @@
         android:theme="@style/Theme.CuocDuaKyThu"
         tools:targetApi="31">
         <activity
-            android:screenOrientation="userLandscape"
+            android:screenOrientation="landscape"
             android:name=".MainActivity"
+            android:exported="true"
+            tools:ignore="DiscouragedApi">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <activity
+            android:screenOrientation="landscape"
+            android:name=".PlayActivity"
             android:exported="true"
             tools:ignore="DiscouragedApi">
             <intent-filter>
