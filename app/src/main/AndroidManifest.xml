@@ -12,17 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CuocDuaKyThu"
         tools:targetApi="31">
+
+        <!-- LoginActivity -->
         <activity
-            android:screenOrientation="userLandscape"
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true"
+            android:screenOrientation="userLandscape"
             tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- HomeActivity -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:screenOrientation="userLandscape"
+            tools:ignore="DiscouragedApi"/>
+
     </application>
 
 </manifest>
