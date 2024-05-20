@@ -31,6 +31,7 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
 
         mapping();
+        disableSeekBar();
         tvTienCuoc.setText(String.valueOf(tienCuoc));
 
         CountDownTimer countDownTimer = new CountDownTimer(60000, 300) {
@@ -54,6 +55,9 @@ public class PlayActivity extends AppCompatActivity {
                         tienCuoc += Integer.parseInt(edtTienCuoc.getText().toString()) * 2;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
+
+                    enableCheckBox();
+                    enableEditTienCuoc();
                 }
                 if (seekBar2.getProgress() >= seekBar2.getMax()) {
                     this.cancel();
@@ -63,6 +67,9 @@ public class PlayActivity extends AppCompatActivity {
                         tienCuoc += Integer.parseInt(edtTienCuoc2.getText().toString()) * 2;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
+
+                    enableCheckBox();
+                    enableEditTienCuoc();
                 }
                 if (seekBar3.getProgress() >= seekBar3.getMax()) {
                     this.cancel();
@@ -72,6 +79,9 @@ public class PlayActivity extends AppCompatActivity {
                         tienCuoc += Integer.parseInt(edtTienCuoc3.getText().toString()) * 2;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
+
+                    enableCheckBox();
+                    enableEditTienCuoc();
                 }
             }
 
@@ -106,6 +116,8 @@ public class PlayActivity extends AppCompatActivity {
 
                     if (tienCuoc >= totalTienCuoc) {
                         countDownTimer.start();
+                        disableCheckBox();
+                        disableEditTienCuoc();
                         tienCuoc -= totalTienCuoc;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
@@ -120,6 +132,36 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void enableCheckBox() {
+        checkBox.setEnabled(true);
+        checkBox2.setEnabled(true);
+        checkBox3.setEnabled(true);
+    }
+
+    private void disableCheckBox() {
+        checkBox.setEnabled(false);
+        checkBox2.setEnabled(false);
+        checkBox3.setEnabled(false);
+    }
+
+    private void enableEditTienCuoc() {
+        edtTienCuoc.setEnabled(true);
+        edtTienCuoc2.setEnabled(true);
+        edtTienCuoc3.setEnabled(true);
+    }
+
+    private void disableEditTienCuoc() {
+        edtTienCuoc.setEnabled(false);
+        edtTienCuoc2.setEnabled(false);
+        edtTienCuoc3.setEnabled(false);
+    }
+
+    private void disableSeekBar() {
+        seekBar.setEnabled(false);
+        seekBar2.setEnabled(false);
+        seekBar3.setEnabled(false);
     }
 
     private void mapping() {
