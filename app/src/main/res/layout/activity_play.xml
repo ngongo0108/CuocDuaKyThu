@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
-
     <Button
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
@@ -38,35 +37,70 @@
         app:layout_constraintLeft_toLeftOf="@id/imageView4"
         app:layout_constraintRight_toRightOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="@+id/imageView4"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"/>
-
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4" />
 
     <CheckBox
         android:id="@+id/checkBoxOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="230dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="224dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextBetOne"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="number"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/checkBoxOne"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxOne"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/checkBoxOne" />
 
     <CheckBox
         android:id="@+id/checkBoxTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxOne" />
+
+    <EditText
+        android:id="@+id/editTextBetTwo"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="number"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/checkBoxTwo"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxTwo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/checkBoxTwo" />
 
     <CheckBox
         android:id="@+id/checkBoxThree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxTwo" />
+
+    <EditText
+        android:id="@+id/editTextBetThree"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="number"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/checkBoxThree"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxThree"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/checkBoxThree" />
 
     <SeekBar
         android:id="@+id/seekBarThree"
@@ -77,20 +111,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/checkBoxThree"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkBoxThree"
-        app:layout_constraintTop_toTopOf="@+id/checkBoxThree"
-       />
+        app:layout_constraintTop_toTopOf="@+id/checkBoxThree" />
 
     <SeekBar
         android:id="@+id/seekBarTwo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:thumb="@drawable/actor2"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/checkBoxTwo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkBoxTwo"
-        app:layout_constraintTop_toTopOf="@+id/checkBoxTwo"
-        />
+        app:layout_constraintTop_toTopOf="@+id/checkBoxTwo" />
 
     <SeekBar
         android:id="@+id/seekBarOne"
@@ -102,6 +134,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkBoxOne"
         app:layout_constraintTop_toTopOf="@+id/checkBoxOne" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
