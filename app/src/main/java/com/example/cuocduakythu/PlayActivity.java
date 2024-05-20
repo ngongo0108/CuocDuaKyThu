@@ -1,5 +1,6 @@
 package com.example.cuocduakythu;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -30,6 +31,13 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+        MediaPlayer theme = MediaPlayer.create(PlayActivity.this, R.raw.theme);
+        MediaPlayer countdownSound = MediaPlayer.create(PlayActivity.this, R.raw.countdown);
+        MediaPlayer startSound = MediaPlayer.create(PlayActivity.this, R.raw.start);
+
+        theme.setLooping(true);
+        theme.start();
+
         mapping();
         disableSeekBar();
         tvTienCuoc.setText(String.valueOf(tienCuoc));
@@ -56,6 +64,8 @@ public class PlayActivity extends AppCompatActivity {
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
 
+                    startSound.stop();
+                    theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
                 }
@@ -68,6 +78,8 @@ public class PlayActivity extends AppCompatActivity {
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
 
+                    startSound.stop();
+                    theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
                 }
@@ -80,6 +92,8 @@ public class PlayActivity extends AppCompatActivity {
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
 
+                    startSound.stop();
+                    theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
                 }
@@ -95,6 +109,7 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int totalTienCuoc = 0;
+                boolean isChecked = true;
 
                 if (checkBox.isChecked() || checkBox2.isChecked() || checkBox3.isChecked()) {
                     seekBar.setProgress(0);
@@ -102,24 +117,51 @@ public class PlayActivity extends AppCompatActivity {
                     seekBar3.setProgress(0);
 
                     if (checkBox.isChecked()) {
-                        int tienCuoc1 = Integer.parseInt(edtTienCuoc.getText().toString());
-                        totalTienCuoc += tienCuoc1;
+                        if (!edtTienCuoc.getText().toString().isEmpty()) {
+                            int tienCuoc1 = Integer.parseInt(edtTienCuoc.getText().toString());
+                            totalTienCuoc += tienCuoc1;
+                        }
+                        else {
+                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            isChecked = false;
+                        }
                     }
                     if (checkBox2.isChecked()) {
-                        int tienCuoc2 = Integer.parseInt(edtTienCuoc2.getText().toString());
-                        totalTienCuoc += tienCuoc2;
+                        if (!edtTienCuoc2.getText().toString().isEmpty()) {
+                            int tienCuoc2 = Integer.parseInt(edtTienCuoc2.getText().toString());
+                            totalTienCuoc += tienCuoc2;
+                        }
+                        else {
+                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            isChecked = false;
+                        }
                     }
                     if (checkBox3.isChecked()) {
-                        int tienCuoc3 = Integer.parseInt(edtTienCuoc3.getText().toString());
-                        totalTienCuoc += tienCuoc3;
+                        if (!edtTienCuoc3.getText().toString().isEmpty()) {
+                            int tienCuoc3 = Integer.parseInt(edtTienCuoc3.getText().toString());
+                            totalTienCuoc += tienCuoc3;
+                        }
+                        else {
+                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            isChecked = false;
+                        }
                     }
 
-                    if (tienCuoc >= totalTienCuoc) {
-                        countDownTimer.start();
+                    if (tienCuoc >= totalTienCuoc && isChecked) {
                         disableCheckBox();
                         disableEditTienCuoc();
                         tienCuoc -= totalTienCuoc;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
+                        theme.pause();
+                        countdownSound.start();
+
+                        countdownSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                startSound.start();
+                                countDownTimer.start();
+                            }
+                        });
                     }
                     else {
                         Toast.makeText(PlayActivity.this, "Không đủ tiền đặt cược", Toast.LENGTH_SHORT).show();
@@ -135,6 +177,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void enableCheckBox() {
+        checkBox.setChecked(false);
+        checkBox2.setChecked(false);
+        checkBox3.setChecked(false);
+
         checkBox.setEnabled(true);
         checkBox2.setEnabled(true);
         checkBox3.setEnabled(true);
@@ -147,6 +193,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void enableEditTienCuoc() {
+        edtTienCuoc.setText("");
+        edtTienCuoc2.setText("");
+        edtTienCuoc3.setText("");
+
         edtTienCuoc.setEnabled(true);
         edtTienCuoc2.setEnabled(true);
         edtTienCuoc3.setEnabled(true);
