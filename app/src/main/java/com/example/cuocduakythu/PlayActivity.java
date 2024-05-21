@@ -1,9 +1,11 @@
 package com.example.cuocduakythu;
 
+import android.animation.ValueAnimator;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,18 +45,22 @@ public class PlayActivity extends AppCompatActivity {
         disableSeekBar();
         tvTienCuoc.setText(String.valueOf(tienCuoc));
 
-        CountDownTimer countDownTimer = new CountDownTimer(60000, 300) {
+        CountDownTimer countDownTimer = new CountDownTimer(60000, 200) {
             @Override
             public void onTick(long l) {
-                int number = 5;
+                int number = 3;
                 Random random = new Random();
-                int randomOne = random.nextInt(number);
-                int randomTwo = random.nextInt(number);
-                int randomThree = random.nextInt(number);
+                int randomOne = random.nextInt(number) + 1;
+                int randomTwo = random.nextInt(number) + 1;
+                int randomThree = random.nextInt(number) + 1;
 
-                seekBar.setProgress(seekBar.getProgress() + randomOne);
-                seekBar2.setProgress(seekBar2.getProgress() + randomTwo);
-                seekBar3.setProgress(seekBar3.getProgress() + randomThree);
+                int progressOne = seekBar.getProgress() + randomOne;
+                int progressTwo = seekBar2.getProgress() + randomTwo;
+                int progressThree = seekBar3.getProgress() + randomThree;
+
+                animateSeekBar(seekBar, progressOne);
+                animateSeekBar(seekBar2, progressTwo);
+                animateSeekBar(seekBar3, progressThree);
 
                 if (seekBar.getProgress() >= seekBar.getMax()) {
                     this.cancel();
@@ -68,6 +75,7 @@ public class PlayActivity extends AppCompatActivity {
                     theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
+                    btnStart.setEnabled(true);
                 }
                 if (seekBar2.getProgress() >= seekBar2.getMax()) {
                     this.cancel();
@@ -82,6 +90,7 @@ public class PlayActivity extends AppCompatActivity {
                     theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
+                    btnStart.setEnabled(true);
                 }
                 if (seekBar3.getProgress() >= seekBar3.getMax()) {
                     this.cancel();
@@ -96,6 +105,7 @@ public class PlayActivity extends AppCompatActivity {
                     theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
+                    btnStart.setEnabled(true);
                 }
             }
 
@@ -150,6 +160,7 @@ public class PlayActivity extends AppCompatActivity {
                     if (tienCuoc >= totalTienCuoc && isChecked) {
                         disableCheckBox();
                         disableEditTienCuoc();
+                        btnStart.setEnabled(false);
                         tienCuoc -= totalTienCuoc;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                         theme.pause();
@@ -226,5 +237,21 @@ public class PlayActivity extends AppCompatActivity {
         edtTienCuoc = findViewById(R.id.editTextNumber);
         edtTienCuoc2 = findViewById(R.id.editTextNumber2);
         edtTienCuoc3 = findViewById(R.id.editTextNumber3);
+    }
+
+    private void animateSeekBar(final SeekBar seekBar, int newProgress) {
+        ValueAnimator animator = ValueAnimator.ofInt(seekBar.getProgress(), newProgress);
+        animator.setDuration(40);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
+                int progress = (int) valueAnimator.getAnimatedValue();
+                seekBar.setProgress(progress);
+            }
+        });
+
+        animator.start();
     }
 }
