@@ -62,46 +62,36 @@ public class PlayActivity extends AppCompatActivity {
                 animateSeekBar(seekBar2, progressTwo);
                 animateSeekBar(seekBar3, progressThree);
 
-                if (seekBar.getProgress() >= seekBar.getMax()) {
+                if (seekBar.getProgress() >= seekBar.getMax() || seekBar2.getProgress() >= seekBar2.getMax() || seekBar3.getProgress() >= seekBar3.getMax()) {
                     this.cancel();
-                    Toast.makeText(PlayActivity.this, "Thú 1 thắng", Toast.LENGTH_SHORT).show();
 
-                    if (checkBox.isChecked()) {
-                        tienCuoc += Integer.parseInt(edtTienCuoc.getText().toString()) * 2;
-                        tvTienCuoc.setText(String.valueOf(tienCuoc));
+                    if (seekBar.getProgress() >= seekBar.getMax()) {
+                        Toast.makeText(PlayActivity.this, "Thú 1 thắng", Toast.LENGTH_SHORT).show();
+
+                        if (checkBox.isChecked()) {
+                            tienCuoc += Integer.parseInt(edtTienCuoc.getText().toString()) * 2;
+                            tvTienCuoc.setText(String.valueOf(tienCuoc));
+                        }
+                    }
+                    if (seekBar2.getProgress() >= seekBar2.getMax()) {
+                        Toast.makeText(PlayActivity.this, "Thú 2 thắng", Toast.LENGTH_SHORT).show();
+
+                        if (checkBox2.isChecked()) {
+                            tienCuoc += Integer.parseInt(edtTienCuoc2.getText().toString()) * 2;
+                            tvTienCuoc.setText(String.valueOf(tienCuoc));
+                        }
+                    }
+                    if (seekBar3.getProgress() >= seekBar3.getMax()) {
+                        Toast.makeText(PlayActivity.this, "Thú 3 thắng", Toast.LENGTH_SHORT).show();
+
+                        if (checkBox3.isChecked()) {
+                            tienCuoc += Integer.parseInt(edtTienCuoc3.getText().toString()) * 2;
+                            tvTienCuoc.setText(String.valueOf(tienCuoc));
+                        }
                     }
 
                     startSound.stop();
-                    theme.start();
-                    enableCheckBox();
-                    enableEditTienCuoc();
-                    btnStart.setEnabled(true);
-                }
-                if (seekBar2.getProgress() >= seekBar2.getMax()) {
-                    this.cancel();
-                    Toast.makeText(PlayActivity.this, "Thú 2 thắng", Toast.LENGTH_SHORT).show();
-
-                    if (checkBox2.isChecked()) {
-                        tienCuoc += Integer.parseInt(edtTienCuoc2.getText().toString()) * 2;
-                        tvTienCuoc.setText(String.valueOf(tienCuoc));
-                    }
-
-                    startSound.stop();
-                    theme.start();
-                    enableCheckBox();
-                    enableEditTienCuoc();
-                    btnStart.setEnabled(true);
-                }
-                if (seekBar3.getProgress() >= seekBar3.getMax()) {
-                    this.cancel();
-                    Toast.makeText(PlayActivity.this, "Thú 3 thắng", Toast.LENGTH_SHORT).show();
-
-                    if (checkBox3.isChecked()) {
-                        tienCuoc += Integer.parseInt(edtTienCuoc3.getText().toString()) * 2;
-                        tvTienCuoc.setText(String.valueOf(tienCuoc));
-                    }
-
-                    startSound.stop();
+                    startSound.prepareAsync();
                     theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
