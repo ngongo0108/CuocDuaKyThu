@@ -32,6 +32,14 @@
             android:screenOrientation="userLandscape"
             tools:ignore="DiscouragedApi"/>
 
+
+        <!-- PlayActivity -->
+        <activity
+            android:name=".PlayActivity"
+            android:exported="true"
+            android:screenOrientation="userLandscape"
+            tools:ignore="DiscouragedApi"/>
+
     </application>
 
 </manifest>
