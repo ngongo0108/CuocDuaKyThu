@@ -1,8 +1,11 @@
 package com.example.cuocduakythu;
 
+import android.animation.ValueAnimator;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -10,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,22 +34,33 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+        MediaPlayer theme = MediaPlayer.create(PlayActivity.this, R.raw.theme);
+        MediaPlayer countdownSound = MediaPlayer.create(PlayActivity.this, R.raw.countdown);
+        MediaPlayer startSound = MediaPlayer.create(PlayActivity.this, R.raw.start);
+
+        theme.setLooping(true);
+        theme.start();
+
         mapping();
         disableSeekBar();
         tvTienCuoc.setText(String.valueOf(tienCuoc));
 
-        CountDownTimer countDownTimer = new CountDownTimer(60000, 300) {
+        CountDownTimer countDownTimer = new CountDownTimer(60000, 200) {
             @Override
             public void onTick(long l) {
-                int number = 5;
+                int number = 3;
                 Random random = new Random();
-                int randomOne = random.nextInt(number);
-                int randomTwo = random.nextInt(number);
-                int randomThree = random.nextInt(number);
+                int randomOne = random.nextInt(number) + 1;
+                int randomTwo = random.nextInt(number) + 1;
+                int randomThree = random.nextInt(number) + 1;
 
-                seekBar.setProgress(seekBar.getProgress() + randomOne);
-                seekBar2.setProgress(seekBar2.getProgress() + randomTwo);
-                seekBar3.setProgress(seekBar3.getProgress() + randomThree);
+                int progressOne = seekBar.getProgress() + randomOne;
+                int progressTwo = seekBar2.getProgress() + randomTwo;
+                int progressThree = seekBar3.getProgress() + randomThree;
+
+                animateSeekBar(seekBar, progressOne);
+                animateSeekBar(seekBar2, progressTwo);
+                animateSeekBar(seekBar3, progressThree);
 
                 if (seekBar.getProgress() >= seekBar.getMax()) {
                     this.cancel();
@@ -56,8 +71,11 @@ public class PlayActivity extends AppCompatActivity {
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
 
+                    startSound.stop();
+                    theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
+                    btnStart.setEnabled(true);
                 }
                 if (seekBar2.getProgress() >= seekBar2.getMax()) {
                     this.cancel();
@@ -68,8 +86,11 @@ public class PlayActivity extends AppCompatActivity {
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
 
+                    startSound.stop();
+                    theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
+                    btnStart.setEnabled(true);
                 }
                 if (seekBar3.getProgress() >= seekBar3.getMax()) {
                     this.cancel();
@@ -80,8 +101,11 @@ public class PlayActivity extends AppCompatActivity {
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                     }
 
+                    startSound.stop();
+                    theme.start();
                     enableCheckBox();
                     enableEditTienCuoc();
+                    btnStart.setEnabled(true);
                 }
             }
 
@@ -95,6 +119,7 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int totalTienCuoc = 0;
+                boolean isChecked = true;
 
                 if (checkBox.isChecked() || checkBox2.isChecked() || checkBox3.isChecked()) {
                     seekBar.setProgress(0);
@@ -102,24 +127,52 @@ public class PlayActivity extends AppCompatActivity {
                     seekBar3.setProgress(0);
 
                     if (checkBox.isChecked()) {
-                        int tienCuoc1 = Integer.parseInt(edtTienCuoc.getText().toString());
-                        totalTienCuoc += tienCuoc1;
+                        if (!edtTienCuoc.getText().toString().isEmpty()) {
+                            int tienCuoc1 = Integer.parseInt(edtTienCuoc.getText().toString());
+                            totalTienCuoc += tienCuoc1;
+                        }
+                        else {
+                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            isChecked = false;
+                        }
                     }
                     if (checkBox2.isChecked()) {
-                        int tienCuoc2 = Integer.parseInt(edtTienCuoc2.getText().toString());
-                        totalTienCuoc += tienCuoc2;
+                        if (!edtTienCuoc2.getText().toString().isEmpty()) {
+                            int tienCuoc2 = Integer.parseInt(edtTienCuoc2.getText().toString());
+                            totalTienCuoc += tienCuoc2;
+                        }
+                        else {
+                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            isChecked = false;
+                        }
                     }
                     if (checkBox3.isChecked()) {
-                        int tienCuoc3 = Integer.parseInt(edtTienCuoc3.getText().toString());
-                        totalTienCuoc += tienCuoc3;
+                        if (!edtTienCuoc3.getText().toString().isEmpty()) {
+                            int tienCuoc3 = Integer.parseInt(edtTienCuoc3.getText().toString());
+                            totalTienCuoc += tienCuoc3;
+                        }
+                        else {
+                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            isChecked = false;
+                        }
                     }
 
-                    if (tienCuoc >= totalTienCuoc) {
-                        countDownTimer.start();
+                    if (tienCuoc >= totalTienCuoc && isChecked) {
                         disableCheckBox();
                         disableEditTienCuoc();
+                        btnStart.setEnabled(false);
                         tienCuoc -= totalTienCuoc;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
+                        theme.pause();
+                        countdownSound.start();
+
+                        countdownSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                startSound.start();
+                                countDownTimer.start();
+                            }
+                        });
                     }
                     else {
                         Toast.makeText(PlayActivity.this, "Không đủ tiền đặt cược", Toast.LENGTH_SHORT).show();
@@ -135,6 +188,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void enableCheckBox() {
+        checkBox.setChecked(false);
+        checkBox2.setChecked(false);
+        checkBox3.setChecked(false);
+
         checkBox.setEnabled(true);
         checkBox2.setEnabled(true);
         checkBox3.setEnabled(true);
@@ -147,6 +204,10 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void enableEditTienCuoc() {
+        edtTienCuoc.setText("");
+        edtTienCuoc2.setText("");
+        edtTienCuoc3.setText("");
+
         edtTienCuoc.setEnabled(true);
         edtTienCuoc2.setEnabled(true);
         edtTienCuoc3.setEnabled(true);
@@ -176,5 +237,21 @@ public class PlayActivity extends AppCompatActivity {
         edtTienCuoc = findViewById(R.id.editTextNumber);
         edtTienCuoc2 = findViewById(R.id.editTextNumber2);
         edtTienCuoc3 = findViewById(R.id.editTextNumber3);
+    }
+
+    private void animateSeekBar(final SeekBar seekBar, int newProgress) {
+        ValueAnimator animator = ValueAnimator.ofInt(seekBar.getProgress(), newProgress);
+        animator.setDuration(40);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
+                int progress = (int) valueAnimator.getAnimatedValue();
+                seekBar.setProgress(progress);
+            }
+        });
+
+        animator.start();
     }
 }
