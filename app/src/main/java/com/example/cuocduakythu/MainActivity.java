@@ -19,18 +19,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
-        anhXa();
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Vui lòng chờ giây lát", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-    private void anhXa(){
-        btnPlay = findViewById(R.id.btnPlay);
-        btnUse = findViewById(R.id.btnUse);
-        btnExits = findViewById(R.id.btnExits);
     }
 }
