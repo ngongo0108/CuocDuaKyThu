@@ -3,12 +3,8 @@ package com.example.cuocduakythu;
 import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -39,7 +35,7 @@ public class PlayActivity extends AppCompatActivity {
     SeekBar seekBar, seekBar2, seekBar3;
     EditText edtTienCuoc, edtTienCuoc2, edtTienCuoc3;
 
-    Dialog menuItem;
+    Dialog menuItem, announce;
 
     int tienCuoc = 100;
 
@@ -56,6 +52,8 @@ public class PlayActivity extends AppCompatActivity {
         theme.start();
 
         mapping();
+        announce = new Dialog(this);
+
         disableSeekBar();
         tvTienCuoc.setText(String.valueOf(tienCuoc));
 
@@ -80,7 +78,12 @@ public class PlayActivity extends AppCompatActivity {
                     this.cancel();
 
                     if (seekBar.getProgress() >= seekBar.getMax()) {
-                        Toast.makeText(PlayActivity.this, "Thú 1 thắng", Toast.LENGTH_SHORT).show();
+                        announce.setContentView(R.layout.activity_announce);
+                        TextView text ;
+                        text = announce.findViewById(R.id.text);
+                        announce.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        text.setText("Thú 1 thắng");
+                        announce.show();
 
                         if (checkBox.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc.getText().toString()) * 2;
@@ -88,16 +91,24 @@ public class PlayActivity extends AppCompatActivity {
                         }
                     }
                     if (seekBar2.getProgress() >= seekBar2.getMax()) {
-                        Toast.makeText(PlayActivity.this, "Thú 2 thắng", Toast.LENGTH_SHORT).show();
-
+                        announce.setContentView(R.layout.activity_announce);
+                        TextView text ;
+                        text = announce.findViewById(R.id.text);
+                        announce.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        text.setText("Thú 2 thắng");
+                        announce.show();
                         if (checkBox2.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc2.getText().toString()) * 2;
                             tvTienCuoc.setText(String.valueOf(tienCuoc));
                         }
                     }
                     if (seekBar3.getProgress() >= seekBar3.getMax()) {
-                        Toast.makeText(PlayActivity.this, "Thú 3 thắng", Toast.LENGTH_SHORT).show();
-
+                        announce.setContentView(R.layout.activity_announce);
+                        announce.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        TextView text ;
+                        text = announce.findViewById(R.id.text);
+                        text.setText("Thú 3 thắng");
+                        announce.show();
                         if (checkBox3.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc3.getText().toString()) * 2;
                             tvTienCuoc.setText(String.valueOf(tienCuoc));
@@ -213,6 +224,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
         menuItem = new Dialog(this);
+
     }
     public void show_Dialog(View v) {
         TextView btnClose ;
