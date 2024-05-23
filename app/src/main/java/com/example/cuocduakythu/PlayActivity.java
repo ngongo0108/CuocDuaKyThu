@@ -75,12 +75,14 @@ public class PlayActivity extends AppCompatActivity {
                 animateSeekBar(seekBar, progressOne);
                 animateSeekBar(seekBar2, progressTwo);
                 animateSeekBar(seekBar3, progressThree);
-
+                int winnerImageRes = 0;
+                String winnerMessage = "";
                 if (seekBar.getProgress() >= seekBar.getMax() || seekBar2.getProgress() >= seekBar2.getMax() || seekBar3.getProgress() >= seekBar3.getMax()) {
                     this.cancel();
 
                     if (seekBar.getProgress() >= seekBar.getMax()) {
-                        Toast.makeText(PlayActivity.this, "Thú 1 thắng", Toast.LENGTH_SHORT).show();
+                        winnerMessage = "Animal 1 has won!";
+                        winnerImageRes = R.drawable.actor1;
 
                         if (checkBox.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc.getText().toString()) * 2;
@@ -88,7 +90,8 @@ public class PlayActivity extends AppCompatActivity {
                         }
                     }
                     if (seekBar2.getProgress() >= seekBar2.getMax()) {
-                        Toast.makeText(PlayActivity.this, "Thú 2 thắng", Toast.LENGTH_SHORT).show();
+                        winnerMessage = "Animal 2 has won!";
+                        winnerImageRes = R.drawable.actor2;
 
                         if (checkBox2.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc2.getText().toString()) * 2;
@@ -96,7 +99,8 @@ public class PlayActivity extends AppCompatActivity {
                         }
                     }
                     if (seekBar3.getProgress() >= seekBar3.getMax()) {
-                        Toast.makeText(PlayActivity.this, "Thú 3 thắng", Toast.LENGTH_SHORT).show();
+                        winnerMessage = "Animal 3 has won!";
+                        winnerImageRes = R.drawable.actor3;
 
                         if (checkBox3.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc3.getText().toString()) * 2;
@@ -105,8 +109,12 @@ public class PlayActivity extends AppCompatActivity {
                     }
 
                     startSound.stop();
-                    startSound.prepareAsync();
-                    theme.start();
+                    theme.stop();
+                    MediaPlayer winnerSound = MediaPlayer.create(PlayActivity.this, R.raw.winner);
+                    winnerSound.start();
+
+                    showWinnerDialog(winnerMessage, winnerImageRes);
+
                     enableCheckBox();
                     enableEditTienCuoc();
                     btnStart.setEnabled(true);
@@ -377,4 +385,24 @@ public class PlayActivity extends AppCompatActivity {
         startActivity(intent);
         finish(); //close current activity
     }
+
+    private void showWinnerDialog(String winnerMessage, int winnerImageRes) {
+        Dialog winnerDialog = new Dialog(PlayActivity.this);
+        winnerDialog.setContentView(R.layout.dialog_winner);
+
+        TextView tvWinnerMessage = winnerDialog.findViewById(R.id.tvWinnerMessage);
+        ImageView ivWinner = winnerDialog.findViewById(R.id.ivWinner);
+        Button btnClose = winnerDialog.findViewById(R.id.btnClose);
+
+        tvWinnerMessage.setText(winnerMessage);
+        ivWinner.setImageResource(winnerImageRes);
+
+        btnClose.setOnClickListener(v -> winnerDialog.dismiss());
+
+        winnerDialog.show();
+    }
+
+
+
+
 }
