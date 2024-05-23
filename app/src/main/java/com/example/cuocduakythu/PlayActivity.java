@@ -2,6 +2,7 @@ package com.example.cuocduakythu;
 
 import android.animation.ValueAnimator;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
@@ -33,7 +34,7 @@ import java.util.Random;
 public class PlayActivity extends AppCompatActivity {
 
     TextView tvTienCuoc;
-    Button btnStart, btnActor;
+    Button btnStart, btnActor, btnExit, btnReset ;
     CheckBox checkBox, checkBox2, checkBox3;
     SeekBar seekBar, seekBar2, seekBar3;
     EditText edtTienCuoc, edtTienCuoc2, edtTienCuoc3;
@@ -109,6 +110,9 @@ public class PlayActivity extends AppCompatActivity {
                     enableCheckBox();
                     enableEditTienCuoc();
                     btnStart.setEnabled(true);
+                    btnActor.setEnabled(true);
+                    btnExit.setEnabled(true);
+                    btnReset.setEnabled(true);
                 }
             }
 
@@ -165,6 +169,9 @@ public class PlayActivity extends AppCompatActivity {
                         disableCheckBox();
                         disableEditTienCuoc();
                         btnStart.setEnabled(false);
+                        btnExit.setEnabled(false);
+                        btnReset.setEnabled(false);
+                        btnActor.setEnabled(false);
                         tienCuoc -= totalTienCuoc;
                         tvTienCuoc.setText(String.valueOf(tienCuoc));
                         theme.pause();
@@ -187,6 +194,22 @@ public class PlayActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(PlayActivity.this, "Vui lòng đặt cược!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                theme.stop();
+                theme.prepareAsync();
+                homeForm();
+            }
+        });
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seekBar.setProgress(0);
+                seekBar2.setProgress(0);
+                seekBar3.setProgress(0);
             }
         });
         menuItem = new Dialog(this);
@@ -330,6 +353,8 @@ public class PlayActivity extends AppCompatActivity {
         edtTienCuoc2 = findViewById(R.id.editTextNumber2);
         edtTienCuoc3 = findViewById(R.id.editTextNumber3);
         btnActor = findViewById(R.id.btnActor);
+        btnExit = findViewById(R.id.btnExit);
+        btnReset = findViewById(R.id.btnReset);
     }
 
     private void animateSeekBar(final SeekBar seekBar, int newProgress) {
@@ -347,5 +372,9 @@ public class PlayActivity extends AppCompatActivity {
 
         animator.start();
     }
-
+    private void homeForm(){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish(); //close current activity
+    }
 }

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="216dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +41,7 @@
         android:text="Actor"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintHorizontal_bias="0.275"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
-        android:backgroundTint="#8BC34A"
+        android:backgroundTint="#4CAF50"
         android:text="Start"
         app:layout_constraintBottom_toTopOf="@+id/seekBar1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,8 +86,8 @@
         android:id="@+id/editTextNumber"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +135,7 @@
         android:layout_marginStart="2dp"
         app:layout_constraintStart_toStartOf="@+id/seekBar1"
         app:layout_constraintEnd_toEndOf="@+id/seekBar1"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar1"
         app:layout_constraintBottom_toTopOf="@+id/seekBar2"/>
 
     <View
@@ -212,9 +212,21 @@
         android:layout_marginStart="10dp"
         android:backgroundTint="#F44336"
         android:text="Exits"
+        app:layout_constraintBottom_toBottomOf="@+id/btnActor"
+        app:layout_constraintStart_toEndOf="@+id/btnActor"
+        app:layout_constraintTop_toTopOf="@+id/btnActor" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Reset"
+        android:backgroundTint="#FF5722"
         app:layout_constraintBottom_toBottomOf="@+id/btnStart"
         app:layout_constraintStart_toEndOf="@+id/btnStart"
-        app:layout_constraintTop_toTopOf="@+id/btnStart" />
+        app:layout_constraintTop_toTopOf="@+id/btnStart"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
