@@ -1,6 +1,14 @@
 package com.example.cuocduakythu;
 
 import android.animation.ValueAnimator;
+import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -9,6 +17,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,15 +26,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PlayActivity extends AppCompatActivity {
 
     TextView tvTienCuoc;
-    Button btnStart;
+    Button btnStart, btnActor;
     CheckBox checkBox, checkBox2, checkBox3;
     SeekBar seekBar, seekBar2, seekBar3;
     EditText edtTienCuoc, edtTienCuoc2, edtTienCuoc3;
+
+    Dialog menuItem;
 
     int tienCuoc = 100;
 
@@ -113,6 +126,7 @@ public class PlayActivity extends AppCompatActivity {
             public void onFinish() {
 
             }
+
         };
 
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +199,94 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
+        menuItem = new Dialog(this);
+    }
+    public void show_Dialog(View v) {
+        TextView btnClose ;
+        Button btnSubmit;
+        menuItem.setContentView(R.layout.activity_actor_popup);
+        btnClose = (TextView) menuItem.findViewById(R.id.btnClose);
+        btnSubmit = (Button) menuItem.findViewById(R.id.btnSubmit);
+
+        CheckBox cb1 = menuItem.findViewById(R.id.cb1);
+        CheckBox cb2 = menuItem.findViewById(R.id.cb2);
+        CheckBox cb3 = menuItem.findViewById(R.id.cb3);
+        CheckBox cb4 = menuItem.findViewById(R.id.cb4);
+        CheckBox cb5 = menuItem.findViewById(R.id.cb5);
+        CheckBox cb6 = menuItem.findViewById(R.id.cb6);
+
+        ImageView actor1 = menuItem.findViewById(R.id.actor1);
+        ImageView actor2 = menuItem.findViewById(R.id.actor2);
+        ImageView actor3 = menuItem.findViewById(R.id.actor3);
+        ImageView actor4 = menuItem.findViewById(R.id.actor4);
+        ImageView actor5 = menuItem.findViewById(R.id.actor5);
+        ImageView actor6 = menuItem.findViewById(R.id.actor6);
+
+        Drawable image1 = actor1.getDrawable();
+        Drawable image2 = actor2.getDrawable();
+        Drawable image3 = actor3.getDrawable();
+        Drawable image4 = actor4.getDrawable();
+        Drawable image5 = actor5.getDrawable();
+        Drawable image6 = actor6.getDrawable();
+
+        // Lưu các ImageView và CheckBox vào mảng
+        CheckBox[] checkBoxes = {cb1, cb2, cb3, cb4, cb5, cb6};
+        ImageView[] imageViews = {actor1, actor2, actor3, actor4, actor5, actor6};
+        Drawable[] images = {image1, image2, image3, image4, image5, image6};
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int countCheckbox = getCheckedCount(checkBoxes);
+
+                if (countCheckbox >3 || countCheckbox <3) {
+                    Toast.makeText(PlayActivity.this, "Please select exactly 3 actors.", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    int[] checkedPositions = getCheckedPositions(checkBoxes);
+
+                    // Cập nhật thumb của SeekBar với ảnh đã chọn
+                    seekBar.setThumb(images[checkedPositions[0]]);
+                    seekBar2.setThumb(images[checkedPositions[1]]);
+                    seekBar3.setThumb(images[checkedPositions[2]]);
+                    Toast.makeText(PlayActivity.this, "Changed successfully!", Toast.LENGTH_SHORT).show();
+                    menuItem.dismiss();
+                }
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuItem.dismiss();
+            }
+        });
+        menuItem.show();
+    }
+
+    private int getCheckedCount(CheckBox[] checkBoxes) {
+        int count = 0;
+        for (CheckBox checkBox : checkBoxes) {
+            if (checkBox.isChecked()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private int[] getCheckedPositions(CheckBox[] checkBoxes) {
+        ArrayList<Integer> checkedPositions = new ArrayList<>();
+        for (int i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].isChecked()) {
+                checkedPositions.add(i);
+            }
+        }
+        // Chuyển ArrayList thành mảng int[]
+        int[] result = new int[checkedPositions.size()];
+        for (int i = 0; i < checkedPositions.size(); i++) {
+            result[i] = checkedPositions.get(i);
+        }
+        return result;
     }
 
     private void enableCheckBox() {
@@ -231,12 +333,13 @@ public class PlayActivity extends AppCompatActivity {
         checkBox = findViewById(R.id.checkBox);
         checkBox2 = findViewById(R.id.checkBox2);
         checkBox3 = findViewById(R.id.checkBox3);
-        seekBar = findViewById(R.id.seekBar);
+        seekBar = findViewById(R.id.seekBar1);
         seekBar2 = findViewById(R.id.seekBar2);
         seekBar3 = findViewById(R.id.seekBar3);
         edtTienCuoc = findViewById(R.id.editTextNumber);
         edtTienCuoc2 = findViewById(R.id.editTextNumber2);
         edtTienCuoc3 = findViewById(R.id.editTextNumber3);
+        btnActor = findViewById(R.id.btnActor);
     }
 
     private void animateSeekBar(final SeekBar seekBar, int newProgress) {
@@ -254,4 +357,5 @@ public class PlayActivity extends AppCompatActivity {
 
         animator.start();
     }
+
 }
