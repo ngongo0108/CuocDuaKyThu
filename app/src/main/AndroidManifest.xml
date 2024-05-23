@@ -40,6 +40,13 @@
             android:screenOrientation="userLandscape"
             tools:ignore="DiscouragedApi"/>
 
+        <!-- EndActivity -->
+        <activity
+            android:name=".EndActivity"
+            android:exported="true"
+            android:screenOrientation="userLandscape"
+            tools:ignore="DiscouragedApi"/>
+
         <!-- UseActivity -->
         <activity
             android:name=".UseActitity"
