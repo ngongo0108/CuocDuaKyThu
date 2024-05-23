@@ -47,6 +47,7 @@ public class PlayActivity extends AppCompatActivity {
         MediaPlayer theme = MediaPlayer.create(PlayActivity.this, R.raw.theme);
         MediaPlayer countdownSound = MediaPlayer.create(PlayActivity.this, R.raw.countdown);
         MediaPlayer startSound = MediaPlayer.create(PlayActivity.this, R.raw.start);
+        MediaPlayer announceSound = MediaPlayer.create(PlayActivity.this, R.raw.announce);
 
         theme.setLooping(true);
         theme.start();
@@ -77,13 +78,37 @@ public class PlayActivity extends AppCompatActivity {
                 if (seekBar.getProgress() >= seekBar.getMax() || seekBar2.getProgress() >= seekBar2.getMax() || seekBar3.getProgress() >= seekBar3.getMax()) {
                     this.cancel();
 
+                    announce.setContentView(R.layout.activity_announce);
+                    TextView text ;
+                    text = announce.findViewById(R.id.text);
+                    announce.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                     if (seekBar.getProgress() >= seekBar.getMax()) {
-                        announce.setContentView(R.layout.activity_announce);
-                        TextView text ;
-                        text = announce.findViewById(R.id.text);
-                        announce.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        text.setText("Thú 1 thắng");
-                        announce.show();
+                        text.setText("Animal 1 has won!");
+                    } else if (seekBar2.getProgress() >= seekBar2.getMax()) {
+                        text.setText("Animal 2 has won!");
+                    } else if (seekBar3.getProgress() >= seekBar3.getMax()) {
+                        text.setText("Animal 3 has won!");
+                    } else if (seekBar.getProgress() >= seekBar.getMax() && seekBar2.getProgress() >= seekBar2.getMax()) {
+                        text.setText("Animal 1 and 2 have won!");
+                    }
+                    else if (seekBar.getProgress() >= seekBar.getMax() && seekBar3.getProgress() >= seekBar3.getMax()) {
+                        text.setText("Animal 1 and 3 have won!");
+                    }
+                    else if (seekBar2.getProgress() >= seekBar2.getMax() && seekBar3.getProgress() >= seekBar3.getMax()) {
+                        text.setText("Animal 2 and 3 have won!");
+                    }
+                    else {
+                        text.setText("All won!");
+                    }
+
+                    startSound.stop();
+                    startSound.prepareAsync();
+
+                    announceSound.start();
+                    announce.show();
+
+                    if (seekBar.getProgress() >= seekBar.getMax()) {
 
                         if (checkBox.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc.getText().toString()) * 2;
@@ -91,39 +116,29 @@ public class PlayActivity extends AppCompatActivity {
                         }
                     }
                     if (seekBar2.getProgress() >= seekBar2.getMax()) {
-                        announce.setContentView(R.layout.activity_announce);
-                        TextView text ;
-                        text = announce.findViewById(R.id.text);
-                        announce.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        text.setText("Thú 2 thắng");
-                        announce.show();
                         if (checkBox2.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc2.getText().toString()) * 2;
                             tvTienCuoc.setText(String.valueOf(tienCuoc));
                         }
                     }
                     if (seekBar3.getProgress() >= seekBar3.getMax()) {
-                        announce.setContentView(R.layout.activity_announce);
-                        announce.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        TextView text ;
-                        text = announce.findViewById(R.id.text);
-                        text.setText("Thú 3 thắng");
-                        announce.show();
                         if (checkBox3.isChecked()) {
                             tienCuoc += Integer.parseInt(edtTienCuoc3.getText().toString()) * 2;
                             tvTienCuoc.setText(String.valueOf(tienCuoc));
                         }
                     }
 
-                    startSound.stop();
-                    startSound.prepareAsync();
-                    theme.start();
-                    enableCheckBox();
-                    enableEditTienCuoc();
-                    btnStart.setEnabled(true);
-                    btnActor.setEnabled(true);
-                    btnExit.setEnabled(true);
-                    btnReset.setEnabled(true);
+                    announceSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            announce.dismiss();
+                            theme.start();
+                            enableCheckBox();
+                            enableEditTienCuoc();
+                            btnExit.setEnabled(true);
+                            btnReset.setEnabled(true);
+                        }
+                    });
                 }
             }
 
@@ -221,6 +236,8 @@ public class PlayActivity extends AppCompatActivity {
                 seekBar.setProgress(0);
                 seekBar2.setProgress(0);
                 seekBar3.setProgress(0);
+                btnStart.setEnabled(true);
+                btnActor.setEnabled(true);
             }
         });
         menuItem = new Dialog(this);
