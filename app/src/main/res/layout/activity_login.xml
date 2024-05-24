@@ -36,15 +36,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="72dp"
             android:layout_marginEnd="32dp"
             android:hint="Username"
             android:inputType="text"
             android:padding="16dp"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -72,18 +73,6 @@
             app:layout_constraintTop_toBottomOf="@id/passwordEditText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="256dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/loginPanel"
-            app:srcCompat="@drawable/cuocduakythu"
-            app:tint="#6750A3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
