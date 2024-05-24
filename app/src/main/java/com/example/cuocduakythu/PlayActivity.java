@@ -61,7 +61,7 @@ public class PlayActivity extends AppCompatActivity {
         CountDownTimer countDownTimer = new CountDownTimer(60000, 200) {
             @Override
             public void onTick(long l) {
-                int number = 3;
+                int number = 5;
                 Random random = new Random();
                 int randomOne = random.nextInt(number) + 1;
                 int randomTwo = random.nextInt(number) + 1;
@@ -388,7 +388,7 @@ public class PlayActivity extends AppCompatActivity {
 
     private void animateSeekBar(final SeekBar seekBar, int newProgress) {
         ValueAnimator animator = ValueAnimator.ofInt(seekBar.getProgress(), newProgress);
-        animator.setDuration(40);
+        animator.setDuration(30);
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
 
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
