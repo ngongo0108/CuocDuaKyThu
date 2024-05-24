@@ -164,7 +164,7 @@ public class PlayActivity extends AppCompatActivity {
                             totalTienCuoc += tienCuoc1;
                         }
                         else {
-                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PlayActivity.this, "Please input point value!", Toast.LENGTH_SHORT).show();
                             isChecked = false;
                         }
                     }
@@ -174,7 +174,7 @@ public class PlayActivity extends AppCompatActivity {
                             totalTienCuoc += tienCuoc2;
                         }
                         else {
-                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PlayActivity.this, "Please input point value!", Toast.LENGTH_SHORT).show();
                             isChecked = false;
                         }
                     }
@@ -184,7 +184,7 @@ public class PlayActivity extends AppCompatActivity {
                             totalTienCuoc += tienCuoc3;
                         }
                         else {
-                            Toast.makeText(PlayActivity.this, "Vui lòng nhập số tiền đặt cược!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PlayActivity.this, "Please input point value!", Toast.LENGTH_SHORT).show();
                             isChecked = false;
                         }
                     }
@@ -211,14 +211,14 @@ public class PlayActivity extends AppCompatActivity {
                             });
                         }
                         else {
-                            Toast.makeText(PlayActivity.this, "Không đủ tiền đặt cược", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PlayActivity.this, "Not enough points.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
 
                 }
                 else {
-                    Toast.makeText(PlayActivity.this, "Vui lòng đặt cược!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PlayActivity.this, "Please choose actor to bet.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
