@@ -133,8 +133,6 @@ public class PlayActivity extends AppCompatActivity {
                         public void onCompletion(MediaPlayer mediaPlayer) {
                             announce.dismiss();
                             theme.start();
-                            enableCheckBox();
-                            enableEditTienCuoc();
                             btnExit.setEnabled(true);
                             btnReset.setEnabled(true);
                         }
@@ -191,28 +189,30 @@ public class PlayActivity extends AppCompatActivity {
                         }
                     }
 
-                    if (tienCuoc >= totalTienCuoc && isChecked) {
-                        disableCheckBox();
-                        disableEditTienCuoc();
-                        btnStart.setEnabled(false);
-                        btnExit.setEnabled(false);
-                        btnReset.setEnabled(false);
-                        btnActor.setEnabled(false);
-                        tienCuoc -= totalTienCuoc;
-                        tvTienCuoc.setText(String.valueOf(tienCuoc));
-                        theme.pause();
-                        countdownSound.start();
+                    if (isChecked) {
+                        if (tienCuoc >= totalTienCuoc) {
+                            disableCheckBox();
+                            disableEditTienCuoc();
+                            btnStart.setEnabled(false);
+                            btnExit.setEnabled(false);
+                            btnReset.setEnabled(false);
+                            btnActor.setEnabled(false);
+                            tienCuoc -= totalTienCuoc;
+                            tvTienCuoc.setText(String.valueOf(tienCuoc));
+                            theme.pause();
+                            countdownSound.start();
 
-                        countdownSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                            @Override
-                            public void onCompletion(MediaPlayer mediaPlayer) {
-                                startSound.start();
-                                countDownTimer.start();
-                            }
-                        });
-                    }
-                    else {
-                        Toast.makeText(PlayActivity.this, "Không đủ tiền đặt cược", Toast.LENGTH_SHORT).show();
+                            countdownSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mediaPlayer) {
+                                    startSound.start();
+                                    countDownTimer.start();
+                                }
+                            });
+                        }
+                        else {
+                            Toast.makeText(PlayActivity.this, "Không đủ tiền đặt cược", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
 
@@ -236,6 +236,8 @@ public class PlayActivity extends AppCompatActivity {
                 seekBar.setProgress(0);
                 seekBar2.setProgress(0);
                 seekBar3.setProgress(0);
+                enableCheckBox();
+                enableEditTienCuoc();
                 btnStart.setEnabled(true);
                 btnActor.setEnabled(true);
             }
